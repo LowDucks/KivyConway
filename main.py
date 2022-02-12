@@ -1,4 +1,4 @@
-import ConwayEngine_done as ConwayEngine
+import ConwayEngine as ConwayEngine
 #import ConwayEngine
 
 from kivy.app import App
@@ -19,6 +19,7 @@ class ControlPanel(BoxLayout):
     generationCounter = NumericProperty(0)
     running = False
 
+
     def update(self, generationCount):
         self.simSpeed = round(self.ids.speedSlider.value)
         self.generationCounter = generationCount
@@ -31,6 +32,9 @@ class ControlPanel(BoxLayout):
 
     def randomize(self):
         self.parent.ids.worldgrid.randomScheduled = True
+
+    def nukeAll(self):
+        self.parent.ids.worldgrid.nukeScheduled = True
 
 class UserInterface(BoxLayout):
 
@@ -47,6 +51,7 @@ class GridRenderer(GridLayout, BackgroundColor):
     flipScheduled = BooleanProperty(False)
     randomScheduled = BooleanProperty(False)
     cellRenderers = None
+    nukeScheduled = BooleanProperty(False)
 
     def update(self, world):
         dimensions = world.getDimensions()
@@ -60,6 +65,10 @@ class GridRenderer(GridLayout, BackgroundColor):
         if self.flipScheduled:
             world.flip()
             self.flipScheduled = False
+
+        if self.nukeScheduled:
+            world.nukeAll()
+            self.nukeScheduled = False
 
         if not self.cellRenderers:
             self.buildCellRenderers(world.grid.cells)

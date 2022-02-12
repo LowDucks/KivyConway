@@ -38,7 +38,7 @@
         Label:
             text: '(x, y)?'
         CheckBox:
-            id: coordCheckBox    
+            id: coordCheckBox
     Label:
         text: 'Generation: {}'.format(root.generationCounter)
     Label:
@@ -56,3 +56,6 @@
     Button:
         text: 'Flip'
         on_release: root.scheduleFlip()
+    Button:
+        text: 'Reset'
+        on_release: root.nukeAll()
